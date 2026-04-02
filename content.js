@@ -1,5 +1,5 @@
 (function() {
-    console.log("Kinetic Obsidian Logic v2.0 // Active");
+    console.log("Kinetic Obsidian Logic v2.1 // Active");
 
     const hostname = window.location.hostname;
 
@@ -33,9 +33,9 @@
     }
 
     async function handleMyClassLogin() {
-        chrome.storage.local.get(['ums_user', 'ums_pass'], (res) => {
-            const user = res.ums_user;
-            const pass = res.ums_pass;
+        chrome.storage.local.get(['myclass_user', 'myclass_pass'], (res) => {
+            const user = res.myclass_user;
+            const pass = res.myclass_pass;
             if (!user || !pass) return;
 
             const userField = document.querySelector('input[name="i"]');
@@ -52,56 +52,10 @@
         });
     }
 
-    async function handleUMSPortalLogin() {
-        chrome.storage.local.get(['ums_user', 'ums_pass'], (res) => {
-            const user = res.ums_user;
-            const pass = res.ums_pass;
-            if (!user || !pass) return;
-
-            // Selector for the Registration Number field
-            const userField = document.getElementById('txtU') || document.querySelector('input[placeholder="User ID"]');
-            
-            if (userField) {
-                // Step 1: Fill User ID
-                userField.value = user;
-                
-                // Step 2: Trigger the site's verification system
-                userField.dispatchEvent(new Event('input', { bubbles: true }));
-                userField.dispatchEvent(new Event('change', { bubbles: true }));
-                userField.dispatchEvent(new Event('blur', { bubbles: true }));
-
-                console.log("VAULT: Registration ID filled. Waiting for verification...");
-
-                // Step 3: Wait for Password field to appear/be enabled
-                const checkInterval = setInterval(() => {
-                    const passField = document.querySelector('input[type="password"]') || document.querySelector('input[placeholder="Password"]');
-                    
-                    // If password field exists and is visible/enabled
-                    if (passField && !passField.disabled && passField.offsetParent !== null) {
-                        passField.value = pass;
-                        console.log("VAULT: Verification successful. Password field filled.");
-                        clearInterval(checkInterval);
-                        
-                        // Pulse the fields to show automation
-                        userField.style.transition = "box-shadow 0.5s";
-                        passField.style.transition = "box-shadow 0.5s";
-                        userField.style.boxShadow = "0 0 10px #f68220";
-                        passField.style.boxShadow = "0 0 10px #f68220";
-                    }
-                }, 500);
-
-                // Timeout after 12 seconds
-                setTimeout(() => clearInterval(checkInterval), 12000);
-            }
-        });
-    }
-
     // Execution Logic
     if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === 'myaccountinternet.lpu.in') {
         handleInternetLogin();
     } else if (hostname === 'myclass.lpu.in') {
         handleMyClassLogin();
-    } else if (hostname === 'ums.lpu.in') {
-        handleUMSPortalLogin();
     }
 })();

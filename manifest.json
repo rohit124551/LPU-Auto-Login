@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "LPU Auto Login",
-  "version": "1.0",
-  "description": "Automatically log in to the LPU internet portal.",
+  "version": "2.1",
+  "description": "Automatically log in to the LPU internet portal and MyClass.",
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
@@ -14,8 +14,7 @@
         "*://internet.lpu.in/*",
         "*://10.10.0.1/*",
         "*://myaccountinternet.lpu.in/*",
-        "*://myclass.lpu.in/*",
-        "*://ums.lpu.in/lpuums*"
+        "*://myclass.lpu.in/*"
       ],
       "js": ["content.js"],
       "run_at": "document_idle"

@@ -34,16 +34,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Load Saved Credentials
-    chrome.storage.local.get(['internet_user', 'internet_pass', 'ums_user', 'ums_pass'], (res) => {
+    chrome.storage.local.get(['internet_user', 'internet_pass', 'myclass_user', 'myclass_pass', 'ums_user', 'ums_pass'], (res) => {
         if (res.internet_user) inputs.internet.user.value = res.internet_user;
         if (res.internet_pass) inputs.internet.pass.value = res.internet_pass;
         
-        // MyClass uses UMS credentials
-        if (res.ums_user) inputs.myclass.user.value = res.ums_user;
-        if (res.ums_pass) inputs.myclass.pass.value = res.ums_pass;
+        // Migration/Preference: Use myclass_user first, otherwise fallback to old ums_user
+        if (res.myclass_user) {
+            inputs.myclass.user.value = res.myclass_user;
+        } else if (res.ums_user) {
+            inputs.myclass.user.value = res.ums_user;
+        }
+
+        if (res.myclass_pass) {
+            inputs.myclass.pass.value = res.myclass_pass;
+        } else if (res.ums_pass) {
+            inputs.myclass.pass.value = res.ums_pass;
+        }
     });
 
-    // Save Logic (Unified for MyClass/UMS)
+    // Save Logic
     saveBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const type = btn.dataset.type;
@@ -58,10 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (type === 'internet') {
                 data.internet_user = user;
                 data.internet_pass = pass;
-            } else {
-                // Unified storage for MyClass & UMS
-                data.ums_user = user;
-                data.ums_pass = pass;
+            } else if (type === 'myclass') {
+                data.myclass_user = user;
+                data.myclass_pass = pass;
             }
 
             chrome.storage.local.set(data, () => {
