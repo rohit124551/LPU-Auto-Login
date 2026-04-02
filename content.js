@@ -9,24 +9,30 @@
             const pass = res.internet_pass;
             if (!user || !pass) return;
 
-            const userField = document.getElementById('username') || document.querySelector('input[name="username"]');
-            const passField = document.getElementById('password') || document.querySelector('input[name="password"]');
-            const loginBtn = document.querySelector('input[type="submit"]') || document.querySelector('button[type="submit"]');
+            const userField = document.querySelector('input[name="username"]') || document.getElementById('username');
+            const passField = document.querySelector('input[name="password"]') || document.getElementById('password');
+            const terms = document.getElementById('agreepolicy') || document.getElementById('chk_id_1') || document.querySelector('input[type="checkbox"]');
+            const loginBtn = document.getElementById('loginbtn') || document.querySelector('button[type="submit"]') || document.querySelector('input[type="submit"]');
 
             if (userField && passField) {
-                let finalUser = user;
-                if (hostname === 'myaccountinternet.lpu.in' && !user.includes('@')) {
-                    finalUser += '@lpu.com';
-                }
-
-                userField.value = finalUser;
+                // Fill credentials
+                userField.value = user.split('@')[0]; // Just the ID, the page script appends @lpu.com
                 passField.value = pass;
 
-                const terms = document.getElementById('chk_id_1') || document.querySelector('input[type="checkbox"]');
-                if (terms) terms.checked = true;
+                // Handle checkbox (must be clicked to enable the button on some pages)
+                if (terms && !terms.checked) {
+                    terms.click();
+                } else if (terms) {
+                    terms.checked = true;
+                }
 
+                // Click login
                 if (loginBtn) {
-                    setTimeout(() => loginBtn.click(), 500);
+                    // Slight delay to ensure checkbox event processed
+                    setTimeout(() => {
+                        if (loginBtn.disabled) loginBtn.disabled = false;
+                        loginBtn.click();
+                    }, 500);
                 }
             }
         });
@@ -40,7 +46,7 @@
 
             const userField = document.querySelector('input[name="i"]');
             const passField = document.querySelector('input[name="p"]');
-            const loginBtn = document.querySelector('button.login-btn') || document.querySelector('input[type="submit"]');
+            const loginBtn = document.querySelector('button[type="submit"]') || document.querySelector('button.ghost-round') || document.querySelector('input[type="submit"]');
 
             if (userField && passField) {
                 userField.value = user;
@@ -53,9 +59,9 @@
     }
 
     // Execution Logic
-    if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === 'myaccountinternet.lpu.in') {
+    if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === '172.20.0.66' || hostname === '172.20.0.67' || hostname === 'myaccountinternet.lpu.in') {
         handleInternetLogin();
-    } else if (hostname === 'myclass.lpu.in') {
+    } else if (hostname === 'myclass.lpu.in' || hostname === 'lovelyprofessionaluniversity.codetantra.com') {
         handleMyClassLogin();
     }
 })();

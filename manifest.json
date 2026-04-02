@@ -6,22 +6,30 @@
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "icon.png"
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
   },
   "content_scripts": [
     {
       "matches": [
         "*://internet.lpu.in/*",
         "*://10.10.0.1/*",
+        "*://172.20.0.66/*",
+        "*://172.20.0.67/*",
         "*://myaccountinternet.lpu.in/*",
-        "*://myclass.lpu.in/*"
+        "*://myclass.lpu.in/*",
+        "*://lovelyprofessionaluniversity.codetantra.com/*"
       ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
   "icons": {
-    "48": "icon.png",
-    "128": "icon.png"
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   }
 }

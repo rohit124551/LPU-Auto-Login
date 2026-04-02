@@ -36,7 +36,7 @@
             margin: 0;
             padding: 0;
             width: 360px;
-            background-color: var(--surface);
+            background: url('image.png') center/cover no-repeat;
             color: var(--on-surface);
             overflow: hidden;
         }
@@ -48,8 +48,9 @@
             flex-direction: column;
             gap: var(--spacing-10);
             min-height: 400px;
-            /* Ambient radial glow in corner */
-            background: radial-gradient(circle at top right, rgba(246, 130, 32, 0.05) 0%, transparent 70%);
+            /* Dark semi-transparent overlay for text readability */
+            background: linear-gradient(to bottom, rgba(14, 14, 14, 0.85), rgba(14, 14, 14, 0.92));
+            backdrop-filter: blur(4px);
         }
 
         /* Premium Header with Glassmorphism */

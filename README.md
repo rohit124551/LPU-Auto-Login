@@ -9,11 +9,11 @@
 
 ## ✨ Features
 
-- **🛡️ Kinetic Obsidian UI**: A next-gen, neumorphic (3D) dark/light theme designed for speed and style.
-- **🌐 Internet Portal Booster**: Instant login for `internet.lpu.in`, `10.10.0.1`, and `myaccountinternet.lpu.in`. It handles auto-checking terms and `@lpu.com` appending.
-- **🎓 MyClass Integrated**: One-click login for `myclass.lpu.in` using dedicated credentials.
-- **🌗 Dual-Theme Support**: Sleek light/dark mode persistence.
-- **🔒 Privacy First**: All credentials stay on your device. Zero external data tracking.
+- **🛡️ Kinetic Obsidian UI**: A modern, glassmorphic dark theme with custom backgrounds and smooth transitions.
+- **🌐 Gateway Booster**: Instant auto-login for `internet.lpu.in`, `10.10.0.1`, `172.20.0.66`, and `172.20.0.67`. Automatically checks terms and conditions.
+- **🎓 MyClass & Codetantra**: Supports both the classic `myclass.lpu.in` and the new Codetantra-powered login portals.
+- **🖼️ Custom Aesthetics**: Personalize your login experience with custom background image integration.
+- **🔒 Privacy First**: All credentials stay safely in your browser's local storage. Zero external tracking.
 
 ---
 
