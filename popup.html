@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPU Auto Login | Kinetic Obsidian</title>
+    <!-- Modern Typography: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Kinetic Obsidian Design Tokens */
+            --surface: #0e0e0e;
+            --surface-container: #131313;
+            --surface-container-high: #20201f;
+            --surface-container-highest: #262626;
+            --primary: #f68220;
+            --primary-container: #ff923f;
+            --on-surface: #ffffff;
+            --on-surface-variant: #adaaaa;
+            --error: #ff7351;
+
+            /* Spacing */
+            --spacing-8: 8px;
+            --spacing-10: 16px;
+            --spacing-12: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 360px;
+            background-color: var(--surface);
+            color: var(--on-surface);
+            overflow: hidden;
+        }
+
+        .luminous-void {
+            position: relative;
+            padding: var(--spacing-10);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-10);
+            min-height: 400px;
+            /* Ambient radial glow in corner */
+            background: radial-gradient(circle at top right, rgba(246, 130, 32, 0.05) 0%, transparent 70%);
+        }
+
+        /* Premium Header with Glassmorphism */
+        .glass-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: var(--spacing-8);
+            border-bottom: 0.5px solid rgba(72, 72, 71, 0.2);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand img {
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 0 8px rgba(246, 130, 32, 0.3));
+        }
+
+        .brand h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--on-surface) 0%, var(--on-surface-variant) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Signature Component: Status Orb */
+        .status-orb {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .status-orb::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        /* Editorial Tabs */
+        .tabs-container {
+            display: flex;
+            background: var(--surface-container);
+            padding: 4px;
+            border-radius: 100px;
+            /* Modern pill shape */
+        }
+
+        .tab-editorial {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 100px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--on-surface-variant);
+            user-select: none;
+        }
+
+        .tab-editorial.active {
+            background: var(--surface-container-highest);
+            color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Form Layering */
+        .viewport-layers {
+            position: relative;
+            height: 220px;
+        }
+
+        .layer {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: layerIn 0.4s ease-out;
+        }
+
+        .layer.active {
+            display: flex;
+        }
+
+        @keyframes layerIn {
+            from {
+                opacity: 0;
+                transform: scale(0.98) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .input-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .field label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--on-surface-variant);
+            margin-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .kinetic-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--surface-container-high);
+            border: 1px solid transparent;
+            border-radius: 12px;
+            color: var(--on-surface);
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .kinetic-input:focus {
+            background: var(--surface-container-highest);
+            border-color: rgba(246, 130, 32, 0.4);
+            box-shadow: 0 0 15px rgba(246, 130, 32, 0.1);
+        }
+
+        /* Glass & Gradient CTA */
+        .ignition-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 100px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+            color: var(--surface);
+            margin-top: 8px;
+            box-shadow: 0 8px 24px rgba(246, 130, 32, 0.2);
+        }
+
+        .ignition-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(246, 130, 32, 0.3);
+        }
+
+        .ignition-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Feedback Mechanics */
+        .toast-editorial {
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--primary);
+            height: 16px;
+            opacity: 0;
+            transition: all 0.4s;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .toast-editorial.show {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            font-size: 0.75rem;
+            color: var(--on-surface-variant);
+            text-align: center;
+            margin-top: auto;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="luminous-void">
+        <header class="glass-header">
+            <div class="brand">
+                <img src="icon.png" alt="LPU Logo">
+                <h1>AUTOLOGIN</h1>
+            </div>
+            <div class="status-indicator">
+                <div class="status-orb" title="System Active"></div>
+            </div>
+        </header>
+
+        <nav class="tabs-container">
+            <div class="tab-editorial active" data-tab="internet">INTERNET</div>
+            <div class="tab-editorial" data-tab="myclass">MYCLASS</div>
+        </nav>
+
+        <main class="viewport-layers">
+            <!-- Internet Layer -->
+            <div id="internet" class="layer active">
+                <div class="input-stack">
+                    <div class="field">
+                        <label for="int-user">Registration ID</label>
+                        <input type="text" id="int-user" class="kinetic-input" placeholder="e.g. 12220490">
+                    </div>
+                    <div class="field">
+                        <label for="int-pass">Gateway Password</label>
+                        <input type="password" id="int-pass" class="kinetic-input" placeholder="••••••••">
+                    </div>
+                </div>
+                <button class="ignition-btn save-btn" data-type="internet">LOCK PORTAL</button>
+            </div>
+
+            <!-- MyClass Layer -->
+            <div id="myclass" class="layer">
+                <div class="input-stack">
+                    <div class="field">
+                        <label for="mc-user">UMS ID</label>
+                        <input type="text" id="mc-user" class="kinetic-input" placeholder="e.g. 12220490">
+                    </div>
+                    <div class="field">
+                        <label for="mc-pass">UMS Password</label>
+                        <input type="password" id="mc-pass" class="kinetic-input" placeholder="••••••••">
+                    </div>
+                </div>
+                <button class="ignition-btn save-btn" data-type="myclass">LOCK MYCLASS</button>
+            </div>
+        </main>
+
+        <div id="status" class="toast-editorial">Vault Updated</div>
+
+        <footer class="footer-note">
+            Kinetic Obsidian v2.0 • Secured Offline
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
