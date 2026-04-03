@@ -1,4 +1,4 @@
-# 🚀 LPU Auto Login | Kinetic Obsidian V2.1
+# 🚀 LPU Auto Login | Kinetic Obsidian V2.3
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-f68220.svg)](https://opensource.org/licenses/MIT)
 [![LPU](https://img.shields.io/badge/LPU-Student_Project-blue.svg)](https://www.lpu.in)
@@ -10,9 +10,11 @@
 ## ✨ Features
 
 - **🛡️ Kinetic Obsidian UI**: A modern, glassmorphic dark theme with custom backgrounds and smooth transitions.
-- **🌐 Gateway Booster**: Instant auto-login for `internet.lpu.in` and `10.10.0.1`. Automatically checks terms and conditions.
+- **🎨 Custom Aura Themes**: Personalize your interface with **Electric Blue**, **Neon Green**, **Cyber Purple**, or **Kinetic Orange**.
+- **📡 Network Monitor**: Real-time Gateway status indicator for `internet.lpu.in` and `10.10.0.1`.
+- **⚙️ Modular Settings**: Toggle extra features on or off via the new Settings panel.
 - **🎓 MyClass & Codetantra**: Supports both the classic `myclass.lpu.in` and the new Codetantra-powered login portals.
-- **🖼️ Custom Aesthetics**: Personalize your login experience with custom background image integration.
+- **🖼️ Custom Aesthetics**: High-definition glassmorphic UI with integrated background image support.
 - **🔒 Privacy First**: All credentials stay safely in your browser's local storage. Zero external tracking.
 
 ---
