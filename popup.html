@@ -19,11 +19,14 @@
             --on-surface: #ffffff;
             --on-surface-variant: #adaaaa;
             --error: #ff7351;
+            --aura-hue: 0deg;
 
             /* Spacing */
             --spacing-8: 8px;
             --spacing-10: 16px;
             --spacing-12: 24px;
+            
+            transition: --primary 0.4s ease, --primary-container 0.4s ease;
         }
 
         * {
@@ -39,6 +42,7 @@
             background: url('image.png') center/cover no-repeat;
             color: var(--on-surface);
             overflow: hidden;
+            transition: background 0.4s ease;
         }
 
         .luminous-void {
@@ -48,9 +52,10 @@
             flex-direction: column;
             gap: var(--spacing-10);
             min-height: 400px;
-            /* Dark semi-transparent overlay for text readability */
+            /* Dark semi-transparent overlay with dynamic theme tint */
             background: linear-gradient(to bottom, rgba(14, 14, 14, 0.85), rgba(14, 14, 14, 0.92));
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px) hue-rotate(var(--aura-hue));
+            transition: backdrop-filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* Premium Header with Glassmorphism */
@@ -86,7 +91,22 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Signature Component: Status Orb */
+        /* Signature Component: Status Orb & Label */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--on-surface-variant);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
         .status-orb {
             width: 10px;
             height: 10px;
@@ -215,8 +235,9 @@
 
         .kinetic-input:focus {
             background: var(--surface-container-highest);
-            border-color: rgba(246, 130, 32, 0.4);
-            box-shadow: 0 0 15px rgba(246, 130, 32, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+            opacity: 0.8;
         }
 
         /* Glass & Gradient CTA */
@@ -233,12 +254,12 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
             color: var(--surface);
             margin-top: 8px;
-            box-shadow: 0 8px 24px rgba(246, 130, 32, 0.2);
+            box-shadow: 0 8px 24px var(--primary);
         }
 
         .ignition-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(246, 130, 32, 0.3);
+            box-shadow: 0 12px 32px var(--primary);
         }
 
         .ignition-btn:active {
@@ -260,6 +281,117 @@
         .toast-editorial.show {
             opacity: 1;
             transform: translateY(-2px);
+        }
+
+        /* Aura Selectors */
+        .aura-picker {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .aura-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .aura-dot:hover {
+            transform: scale(1.3);
+        }
+
+        .aura-dot.active {
+            border-color: var(--on-surface);
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .aura-orange { background-color: #f68220; color: #f68220; }
+        .aura-blue { background-color: #2196f3; color: #2196f3; }
+        .aura-green { background-color: #4caf50; color: #4caf50; }
+        .aura-purple { background-color: #9c27b0; color: #9c27b0; }
+
+        .field-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .field-desc {
+            font-size: 0.6rem;
+            color: var(--on-surface-variant);
+            opacity: 0.6;
+            letter-spacing: 0.02em;
+        }
+
+        .settings-trigger {
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+            margin-left: 8px;
+        }
+
+        .settings-trigger:hover {
+            background: var(--surface-container-highest);
+        }
+
+        .field-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--surface-container-high);
+            border-radius: 12px;
+        }
+
+        .field-row label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--on-surface-variant);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Sleek Toggle Switch */
+        .aura-toggle {
+            appearance: none;
+            width: 36px;
+            height: 20px;
+            background: var(--surface-container-highest);
+            border-radius: 100px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .aura-toggle:checked {
+            background: var(--primary);
+        }
+
+        .aura-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: var(--on-surface);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .aura-toggle:checked::before {
+            left: 18px;
         }
 
         .footer-note {
@@ -315,7 +447,11 @@
                 <h1>AUTOLOGIN</h1>
             </div>
             <div class="status-indicator">
-                <div class="status-orb" title="System Active"></div>
+                <span id="gateway-status" class="status-label">LPU ONLINE</span>
+                <div id="status-orb" class="status-orb" title="System Active"></div>
+                <div id="settings-btn" class="settings-trigger" title="Settings">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--on-surface-variant)"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.84,9.48l2.03,1.58C4.82,11.36,4.8,11.68,4.8,12c0,0.32,0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.5c-1.93,0-3.5-1.57-3.5-3.5 s1.57-3.5,3.5-3.5s3.5,1.57,3.5,3.5S13.93,15.5,12,15.5z"/></svg>
+                </div>
             </div>
         </header>
 
@@ -354,11 +490,39 @@
                 </div>
                 <button class="ignition-btn save-btn" data-type="myclass">LOCK MYCLASS</button>
             </div>
+            <!-- Settings Layer -->
+            <div id="settings" class="layer">
+                <div class="input-stack">
+                    <div class="field-row">
+                        <div class="field-info">
+                            <label>NETWORK MONITOR</label>
+                            <span class="field-desc">Real-time Gateway Status Ping</span>
+                        </div>
+                        <input type="checkbox" id="set-network" class="aura-toggle" checked>
+                    </div>
+                    <div class="field-row">
+                        <div class="field-info">
+                            <label>AURA THEME PICKER</label>
+                            <span class="field-desc">Personalize accent colors</span>
+                        </div>
+                        <input type="checkbox" id="set-aura" class="aura-toggle" checked>
+                    </div>
+                </div>
+                <button class="ignition-btn back-btn">EXIT SETTINGS</button>
+            </div>
         </main>
+
+
 
         <div id="status" class="toast-editorial">Vault Updated</div>
 
         <footer class="footer-note">
+            <div class="aura-picker">
+                <div class="aura-dot aura-orange active" data-aura="orange" title="Kinetic Orange"></div>
+                <div class="aura-dot aura-blue" data-aura="blue" title="Electric Blue"></div>
+                <div class="aura-dot aura-green" data-aura="green" title="Neon Green"></div>
+                <div class="aura-dot aura-purple" data-aura="purple" title="Cyber Purple"></div>
+            </div>
             <div class="dev-links">
                 <a class="dev-link" id="github-link" data-url="https://github.com/rohit124551">
                     <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -368,8 +532,9 @@
                     Support
                 </a>
             </div>
-            <span>Kinetic Obsidian v2.2 • Developed by rohit124551</span>
+            <span>Kinetic Obsidian v2.3 • Developed by rohit124551</span>
         </footer>
+
 
     </div>
     <script src="popup.js"></script>
