@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyAura(name, save = true) {
         const aura = AURAS[name] || AURAS.orange;
         const root = document.documentElement;
-        
+
         root.style.setProperty('--primary', aura.primary);
         root.style.setProperty('--primary-container', aura.container);
         root.style.setProperty('--aura-hue', aura.hue);
@@ -64,13 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 3000);
-            
-            await fetch('https://internet.lpu.in', { 
-                method: 'HEAD', 
+
+            await fetch('https://internet.lpu.in', {
+                method: 'HEAD',
                 mode: 'no-cors',
-                signal: controller.signal 
+                signal: controller.signal
             });
-            
+
             clearTimeout(timeoutId);
             gatewayStatus.textContent = "GATEWAY ONLINE";
             gatewayStatus.style.color = "var(--primary)";
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             l.classList.remove('active');
             if (l.id === targetId) l.classList.add('active');
         });
-        
+
         const tabsContainer = document.querySelector('.tabs-container');
         if (targetId === 'settings') {
             tabsContainer.style.opacity = '0';
@@ -125,8 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     chrome.storage.local.get([
-        'internet_user', 'internet_pass', 
-        'myclass_user', 'myclass_pass', 
+        'internet_user', 'internet_pass',
+        'myclass_user', 'myclass_pass',
         'ums_user', 'ums_pass',
         'selected_aura', 'feature_settings'
     ], (res) => {
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Load Credentials
         if (res.internet_user) inputs.internet.user.value = res.internet_user;
         if (res.internet_pass) inputs.internet.pass.value = res.internet_pass;
-        
+
         if (res.myclass_user) {
             inputs.myclass.user.value = res.myclass_user;
         } else if (res.ums_user) {

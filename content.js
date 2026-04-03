@@ -58,10 +58,32 @@
         });
     }
 
+    async function handleOasLogin() {
+        chrome.storage.local.get(['myclass_user', 'myclass_pass'], (res) => {
+            const user = res.myclass_user;
+            const pass = res.myclass_pass;
+            if (!user || !pass) return;
+
+            const userField = document.getElementById('login-LoginId');
+            const passField = document.getElementById('login-Password');
+            const loginBtn = document.querySelector('button[type="submit"].btn-success') || document.querySelector('button[type="submit"]');
+
+            if (userField && passField) {
+                userField.value = user;
+                passField.value = pass;
+                if (loginBtn) {
+                    setTimeout(() => loginBtn.click(), 500);
+                }
+            }
+        });
+    }
+
     // Execution Logic
     if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === 'myaccountinternet.lpu.in') {
         handleInternetLogin();
     } else if (hostname === 'myclass.lpu.in' || hostname === 'lovelyprofessionaluniversity.codetantra.com') {
         handleMyClassLogin();
+    } else if (hostname === 'oas.lpu.in') {
+        handleOasLogin();
     }
 })();

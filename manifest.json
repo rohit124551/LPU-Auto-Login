@@ -1,9 +1,12 @@
 {
   "manifest_version": 3,
   "name": "LPU Auto Login",
-  "version": "2.2",
+  "version": "2.3",
   "description": "Automatically log in to the LPU internet portal and MyClass with a modern Kinetic Obsidian UI.",
   "permissions": ["storage", "tabs"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -19,6 +22,7 @@
         "*://10.10.0.1/*",
         "*://myaccountinternet.lpu.in/*",
         "*://myclass.lpu.in/*",
+        "*://oas.lpu.in/*",
         "*://lovelyprofessionaluniversity.codetantra.com/*"
       ],
       "js": ["content.js"],
