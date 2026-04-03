@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "LPU Auto Login",
   "version": "2.3",
-  "description": "Automatically log in to the LPU internet portal and MyClass with a modern Kinetic Obsidian UI.",
+  "description": "Automated high-speed logins for LPU Gateway, MyClass, and OAS with a premium glassmorphic UI and real-time network monitoring.",
   "permissions": ["storage", "tabs"],
   "background": {
     "service_worker": "background.js"
@@ -10,9 +10,9 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "128": "icon.png",
-      "48": "icon.png",
-      "32": "icon.png"
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
     }
   },
   "content_scripts": [
@@ -30,8 +30,8 @@
     }
   ],
   "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   }
 }
