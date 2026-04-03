@@ -9,12 +9,12 @@
 
 ## ✨ Features
 
+- **🎓 Comprehensive LPU Support**: Automates logins for `myclass.lpu.in` (UMS), `oas.lpu.in`, and Codetantra-powered portals.
 - **🛡️ Kinetic Obsidian UI**: A modern, glassmorphic dark theme with custom backgrounds and smooth transitions.
 - **🎨 Custom Aura Themes**: Personalize your interface with **Electric Blue**, **Neon Green**, **Cyber Purple**, or **Kinetic Orange**.
 - **📡 Network Monitor**: Real-time Gateway status indicator for `internet.lpu.in` and `10.10.0.1`.
 - **⚙️ Modular Settings**: Toggle extra features on or off via the new Settings panel.
-- **🎓 MyClass & Codetantra**: Supports both the classic `myclass.lpu.in` and the new Codetantra-powered login portals.
-- **🖼️ Custom Aesthetics**: High-definition glassmorphic UI with integrated background image support.
+- **🚀 Onboarding Experience**: Automatic redirect to a custom "Thank You" page upon installation for a professional setup.
 - **🔒 Privacy First**: All credentials stay safely in your browser's local storage. Zero external tracking.
 
 ---
