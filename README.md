@@ -36,6 +36,35 @@
 
 The UI uses a **Soft 3D Neumorphic** design, providing a premium interactive experience.
 
+| Main Interface | Settings Panel |
+| :---: | :---: |
+| ![Interface](interface.png) | ![Settings](Setting.png) |
+
+---
+
+## 🔍 Feature Breakdown
+
+### 1. Main Interface (`interface.png`)
+- **Dual Flow**: Switch between **INTERNET** (Gateway Login) and **MYCLASS** (UMS/Classes) using the editorial tabs.
+- **Registration ID & Password**: Enter your LPU credentials once. They are encrypted and stored locally in your browser's "Vault" (`chrome.storage.local`).
+- **LOCK PORTAL**: Saves your credentials and prepares the extension to auto-fill and submit login forms whenever you visit the portal.
+- **Network Status Orb**: A dynamic indicator (top right) that shows real-time connectivity to LPU servers.
+
+### 2. Settings Panel (`Setting.png`)
+- **Network Monitor Toggle**: Enable or disable the real-time background pinging of LPU Gateway servers.
+- **Aura Theme Picker Toggle**: Toggle the visibility of the color customization dots in the footer.
+- **Support Links**: Quick access to suggests features via Google Forms, GitHub repository, and Developer Portfolio.
+- **Exit Settings**: One-tap navigation back to the main login controls.
+
+### 🎨 Aura Theme Engine
+The extension features 4 pre-configured **Aura Themes** accessible via the footer dots:
+- **Kinetic Orange** (Default)
+- **Electric Blue**
+- **Neon Green**
+- **Cyber Purple**
+
+Clicking a dot applies a unique hue-rotation and accent color across the entire interface, saved instantly to your profile.
+
 ---
 
 ## 🖥️ Developers & Contact
