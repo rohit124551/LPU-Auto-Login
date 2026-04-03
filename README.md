@@ -10,7 +10,7 @@
 ## ✨ Features
 
 - **🛡️ Kinetic Obsidian UI**: A modern, glassmorphic dark theme with custom backgrounds and smooth transitions.
-- **🌐 Gateway Booster**: Instant auto-login for `internet.lpu.in`, `10.10.0.1`, `172.20.0.66`, and `172.20.0.67`. Automatically checks terms and conditions.
+- **🌐 Gateway Booster**: Instant auto-login for `internet.lpu.in` and `10.10.0.1`. Automatically checks terms and conditions.
 - **🎓 MyClass & Codetantra**: Supports both the classic `myclass.lpu.in` and the new Codetantra-powered login portals.
 - **🖼️ Custom Aesthetics**: Personalize your login experience with custom background image integration.
 - **🔒 Privacy First**: All credentials stay safely in your browser's local storage. Zero external tracking.
@@ -38,10 +38,14 @@ The UI uses a **Soft 3D Neumorphic** design, providing a premium interactive exp
 
 ## 🖥️ Developers & Contact
 
-Developed by an **LPU CSE Student**.
+Developed by **rohit124551**, an LPU CSE Student passionate about automation and clean UI.
 
-- **Portfolio**: [Check out my work](https://yourportfolio.link)
-- **Email**: [Contact for support](mailto:youremail@example.com)
+- **GitHub**: [rohit124551](https://github.com/rohit124551)
+- **Portfolio**: [Visit My Portfolio](https://rohit124551.github.io)
+- **Email**: [rohit124551@gmail.com](mailto:rohit124551@gmail.com)
+
+[![Star History Chart](https://api.star-history.com/svg?repos=rohit124551/LPU-Auto-Login&type=Date)](https://star-history.com/#rohit124551/LPU-Auto-Login&Date)
+
 
 ---
 

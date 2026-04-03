@@ -90,4 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
             statusDiv.classList.remove('show');
         }, 2000);
     }
+
+    // External Link Handling
+    document.querySelectorAll('.dev-link').forEach(link => {
+        link.addEventListener('click', () => {
+            const url = link.dataset.url;
+            if (url.startsWith('mailto:')) {
+                window.open(url, '_blank');
+            } else {
+                chrome.tabs.create({ url: url });
+            }
+        });
+    });
 });

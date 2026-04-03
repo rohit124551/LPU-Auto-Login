@@ -59,7 +59,7 @@
     }
 
     // Execution Logic
-    if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === '172.20.0.66' || hostname === '172.20.0.67' || hostname === 'myaccountinternet.lpu.in') {
+    if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === 'myaccountinternet.lpu.in') {
         handleInternetLogin();
     } else if (hostname === 'myclass.lpu.in' || hostname === 'lovelyprofessionaluniversity.codetantra.com') {
         handleMyClassLogin();
