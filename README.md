@@ -42,9 +42,9 @@ The UI uses a **Soft 3D Neumorphic** design, providing a premium interactive exp
 
 Developed by **rohit124551**, an LPU CSE Student passionate about automation and clean UI.
 
-- **GitHub**: [rohit124551](https://github.com/rohit124551)
-- **Portfolio**: [Visit My Portfolio](https://rohit124551.github.io)
-- **Email**: [rohit124551@gmail.com](mailto:rohit124551@gmail.com)
+- 🐙 **GitHub**: [rohit124551](https://github.com/rohit124551)
+- 💼 **Portfolio**: [rohitkumarranjan.in](https://rohitkumarranjan.in)
+- 📧 **Support**: [hello@rohitkumarranjan.in](mailto:hello@rohitkumarranjan.in)
 
 [![Star History Chart](https://api.star-history.com/svg?repos=rohit124551/LPU-Auto-Login&type=Date)](https://star-history.com/#rohit124551/LPU-Auto-Login&Date)
 
