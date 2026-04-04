@@ -372,6 +372,87 @@
             background: var(--surface-container-highest);
         }
 
+        /* Master Power Toggle */
+        .power-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 100px;
+            border: 1.5px solid var(--primary);
+            background: rgba(246, 130, 32, 0.08);
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .power-chip:hover {
+            background: rgba(246, 130, 32, 0.15);
+        }
+
+        .power-chip.off {
+            border-color: #555;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .power-icon {
+            width: 14px;
+            height: 14px;
+            fill: var(--primary);
+            transition: fill 0.35s;
+        }
+
+        .power-chip.off .power-icon {
+            fill: #555;
+        }
+
+        .power-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            transition: color 0.35s;
+        }
+
+        .power-chip.off .power-label {
+            color: #555;
+        }
+
+        /* Disabled overlay when extension is OFF */
+        .disabled-banner {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.75);
+            border-radius: 16px;
+            z-index: 10;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+            animation: layerIn 0.3s ease-out;
+        }
+
+        .disabled-banner.show {
+            display: flex;
+        }
+
+        .disabled-banner-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #555;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .disabled-banner-sub {
+            font-size: 0.7rem;
+            color: #444;
+            letter-spacing: 0.04em;
+        }
+
         .field-row {
             display: flex;
             align-items: center;
@@ -486,12 +567,28 @@
             </div>
         </header>
 
+        <!-- Master Auto-Login Power Toggle -->
+        <div id="power-chip" class="power-chip" title="Toggle Auto-Login On/Off">
+            <svg class="power-icon" viewBox="0 0 24 24">
+                <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/>
+            </svg>
+            <span id="power-label" class="power-label">ON</span>
+        </div>
+
         <nav class="tabs-container">
             <div class="tab-editorial active" data-tab="internet">INTERNET</div>
             <div class="tab-editorial" data-tab="myclass">MYCLASS / OAS</div>
         </nav>
 
         <main class="viewport-layers">
+            <!-- Disabled Overlay Banner (shown when Auto-Login is OFF) -->
+            <div id="disabled-banner" class="disabled-banner">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="#444">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <span class="disabled-banner-text">AUTO-LOGIN DISABLED</span>
+                <span class="disabled-banner-sub">Toggle ON to enable automatic login</span>
+            </div>
             <!-- Internet Layer -->
             <div id="internet" class="layer active">
                 <div class="input-stack">

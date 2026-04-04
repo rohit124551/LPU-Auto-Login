@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.querySelector('.back-btn');
     const gatewayStatus = document.getElementById('gateway-status');
     const statusOrb = document.getElementById('status-orb');
+    const powerChip = document.getElementById('power-chip');
+    const powerLabel = document.getElementById('power-label');
+    const disabledBanner = document.getElementById('disabled-banner');
+
+    let isAutoLoginEnabled = true; // default ON
 
     // Settings Selectors
     const toggles = {
@@ -52,6 +57,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (save) chrome.storage.local.set({ selected_aura: name });
     }
+
+    // --- Master Power Toggle ---
+    function applyPowerState(enabled, save = true) {
+        isAutoLoginEnabled = enabled;
+        if (enabled) {
+            powerChip.classList.remove('off');
+            powerLabel.textContent = 'ON';
+            disabledBanner.classList.remove('show');
+            gatewayStatus.textContent = 'SYSTEM READY';
+            statusOrb.style.background = 'var(--primary)';
+            statusOrb.style.boxShadow = '0 0 10px var(--primary)';
+            // Kick off network monitor if enabled in settings
+            if (toggles.network && toggles.network.checked) checkGatewayStatus();
+        } else {
+            powerChip.classList.add('off');
+            powerLabel.textContent = 'OFF';
+            disabledBanner.classList.add('show');
+            gatewayStatus.textContent = 'AUTO-LOGIN OFF';
+            gatewayStatus.style.color = '#555';
+            statusOrb.style.background = '#333';
+            statusOrb.style.boxShadow = 'none';
+        }
+        if (save) chrome.storage.local.set({ autologin_enabled: enabled });
+    }
+
+    powerChip.addEventListener('click', () => {
+        applyPowerState(!isAutoLoginEnabled);
+        showStatus(isAutoLoginEnabled ? 'AUTO-LOGIN ACTIVATED' : 'AUTO-LOGIN DISABLED', isAutoLoginEnabled ? 'var(--primary)' : '#555');
+    });
 
     // --- Network Monitor ---
     async function checkGatewayStatus() {
@@ -128,8 +162,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'internet_user', 'internet_pass',
         'myclass_user', 'myclass_pass',
         'ums_user', 'ums_pass',
-        'selected_aura', 'feature_settings'
+        'selected_aura', 'feature_settings', 'autologin_enabled'
     ], async (res) => {
+        // Load Power State (default ON if never set)
+        const isEnabled = res.autologin_enabled !== false;
+        applyPowerState(isEnabled, false);
+
         // Load Feature Settings
         if (res.feature_settings) {
             toggles.network.checked = res.feature_settings.network_enabled;

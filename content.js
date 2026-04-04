@@ -78,12 +78,27 @@
         });
     }
 
-    // Execution Logic
-    if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === 'myaccountinternet.lpu.in') {
-        handleInternetLogin();
-    } else if (hostname === 'myclass.lpu.in' || hostname === 'lovelyprofessionaluniversity.codetantra.com') {
-        handleMyClassLogin();
-    } else if (hostname === 'oas.lpu.in') {
-        handleOasLogin();
-    }
+    // ============================================================
+    // GATE: Read autologin_enabled FRESH from storage on every
+    //       page load. If it is explicitly false → EXIT immediately.
+    //       Nothing fires. No messages. No form filling.
+    // ============================================================
+    chrome.storage.local.get(['autologin_enabled'], (res) => {
+        // autologin_enabled === false means user turned it OFF.
+        // undefined / true both mean ON (default is ON).
+        if (res.autologin_enabled === false) {
+            console.log("Kinetic Obsidian // Auto-Login is OFF. Skipping.");
+            return; // Hard stop — nothing below runs
+        }
+
+        // Toggle is ON — proceed with login
+        if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === 'myaccountinternet.lpu.in') {
+            handleInternetLogin();
+        } else if (hostname === 'myclass.lpu.in' || hostname === 'lovelyprofessionaluniversity.codetantra.com') {
+            handleMyClassLogin();
+        } else if (hostname === 'oas.lpu.in') {
+            handleOasLogin();
+        }
+    });
 })();
+

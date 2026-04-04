@@ -31,8 +31,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const keys = fieldMap[request.flow];
         if (!keys) return false;
 
-        chrome.storage.local.get(keys, async (res) => {
+        // Strictly check if auto-login is enabled
+        chrome.storage.local.get(['autologin_enabled', ...keys], async (res) => {
             try {
+                // If toggle is OFF, abort immediately
+                if (res.autologin_enabled === false) {
+                    sendResponse({ success: false, error: 'AUTOLOGIN_DISABLED' });
+                    return;
+                }
                 const user = res[keys[0]];
                 const encryptedPass = res[keys[1]];
 
