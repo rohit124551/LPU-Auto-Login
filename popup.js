@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'myclass_user', 'myclass_pass',
         'ums_user', 'ums_pass',
         'selected_aura', 'feature_settings'
-    ], (res) => {
+    ], async (res) => {
         // Load Feature Settings
         if (res.feature_settings) {
             toggles.network.checked = res.feature_settings.network_enabled;
@@ -140,20 +140,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Apply Theme
         if (res.selected_aura) applyAura(res.selected_aura, false);
 
-        // Load Credentials
-        if (res.internet_user) inputs.internet.user.value = res.internet_user;
-        if (res.internet_pass) inputs.internet.pass.value = res.internet_pass;
-
-        if (res.myclass_user) {
-            inputs.myclass.user.value = res.myclass_user;
-        } else if (res.ums_user) {
-            inputs.myclass.user.value = res.ums_user;
+        // Load Credentials (Decrypted with Identity Binding)
+        if (res.internet_user) {
+            inputs.internet.user.value = res.internet_user;
+            if (res.internet_pass) {
+                inputs.internet.pass.value = await Vault.decrypt(res.internet_pass, res.internet_user);
+            }
         }
 
-        if (res.myclass_pass) {
-            inputs.myclass.pass.value = res.myclass_pass;
-        } else if (res.ums_pass) {
-            inputs.myclass.pass.value = res.ums_pass;
+        const mcUser = res.myclass_user || res.ums_user;
+        const mcPass = res.myclass_pass || res.ums_pass;
+        
+        if (mcUser) {
+            inputs.myclass.user.value = mcUser;
+            if (mcPass) {
+                inputs.myclass.pass.value = await Vault.decrypt(mcPass, mcUser);
+            }
         }
 
         // Run Monitor
@@ -178,20 +180,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     saveBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             const type = btn.dataset.type;
             const user = inputs[type].user.value.trim();
             const pass = inputs[type].pass.value.trim();
 
             if (!user || !pass) return showStatus("ERR: EMPTY_FIELDS", "#ff7351");
 
+            // Encrypt sensitive data before storage (Locked with user identity)
+            const encryptedPass = await Vault.encrypt(pass, user);
+
             const data = {};
             if (type === 'internet') {
                 data.internet_user = user;
-                data.internet_pass = pass;
+                data.internet_pass = encryptedPass;
             } else {
                 data.myclass_user = user;
-                data.myclass_pass = pass;
+                data.myclass_pass = encryptedPass;
             }
 
             chrome.storage.local.set(data, () => {

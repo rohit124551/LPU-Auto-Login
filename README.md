@@ -46,8 +46,8 @@ The UI uses a **Soft 3D Neumorphic** design, providing a premium interactive exp
 
 ### 1. Main Interface (`interface.png`)
 - **Dual Flow**: Switch between **INTERNET** (Gateway Login) and **MYCLASS** (UMS/Classes) using the editorial tabs.
-- **Registration ID & Password**: Enter your LPU credentials once. They are encrypted and stored locally in your browser's "Vault" (`chrome.storage.local`).
-- **LOCK PORTAL**: Saves your credentials and prepares the extension to auto-fill and submit login forms whenever you visit the portal.
+- **Registration ID & Password**: Enter your LPU credentials once. They are encrypted using **AES-GCM** and stored locally in your browser's "Vault" (`chrome.storage.local`).
+- **LOCK PORTAL**: Securely encrypts and saves your credentials to auto-fill and submit login forms whenever you visit the portal.
 - **Network Status Orb**: A dynamic indicator (top right) that shows real-time connectivity to LPU servers.
 
 ### 2. Settings Panel (`Setting.png`)
@@ -56,7 +56,32 @@ The UI uses a **Soft 3D Neumorphic** design, providing a premium interactive exp
 - **Support Links**: Quick access to suggests features via Google Forms, GitHub repository, and Developer Portfolio.
 - **Exit Settings**: One-tap navigation back to the main login controls.
 
-### 🎨 Aura Theme Engine
+---
+
+## 🛡️ Security & Encryption
+
+LPU Auto Login prioritizes student data safety by implementing a multi-layered security architecture:
+
+### 1. 📂 Local-Only Storage
+Your credentials **never** leave your computer. We do not use any external servers or databases. All data is saved exclusively in your browser's private `chrome.storage.local`.
+
+### 2. 🔑 Unique Dynamic Key (Per User)
+Every single student who installs this extension gets their own **unique, random 256-bit AES key** generated locally in their browser. 
+- **No Two Keys are Alike**: Your encryption key is different from every other student's key.
+- **Privacy**: The developer of this extension cannot see or access your key.
+
+### 3. 🔒 AES-GCM (Identity Bound)
+We use **AES-GCM (Advanced Encryption Standard)** with **Identity Binding (AAD)**:
+- **How it works**: The User ID is mathematically included in the encryption process.
+- **Result**: Even if someone managed to steal your encrypted data and your private key, they **cannot** decrypt your password without also providing your exact Registration ID.
+
+> [!IMPORTANT]
+> **Zero Exposure Architecture**
+> Even if a malicious actor manually exports your browser's local storage data, it remains **unreadable and useless**. The data is "double-locked" by your unique local key and your Registration ID.
+
+---
+
+## 🎨 Aura Theme Engine
 The extension features 4 pre-configured **Aura Themes** accessible via the footer dots:
 - **Kinetic Orange** (Default)
 - **Electric Blue**
