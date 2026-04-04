@@ -124,8 +124,10 @@ This extension is an independent student project and is NOT affiliated with Love
 - 🔒 **AES-GCM (256-bit) Encryption** — Passwords are now encrypted before storage. Plain-text passwords no longer exist in local storage.
 - 🔑 **Unique Dynamic Key per Installation** — Every student gets their own randomly generated AES key. No two extensions share the same key.
 - 🪪 **Identity Binding (AAD)** — Each password is mathematically locked to the specific Registration ID it belongs to. Without the matching ID, decryption is cryptographically impossible.
-- 🧠 **Background-Side Decryption** — Decryption happens exclusively in the extension's background process. LPU portals never see the encryption keys or decryption logic.
-- ⚡ **Master Auto-Login ON/OFF Toggle** — A prominent power chip in the popup lets users instantly enable or disable automatic login. When OFF, the content script reads storage and exits immediately — no form fill, no login attempt, strictly enforced on every page load.
+- 🧠 **Background-Side Decryption** — Decryption happens exclusively in the extension background process. LPU portals never see the encryption keys or decryption logic.
+- ⚡ **Master Auto-Login ON/OFF Toggle** — A prominent power chip in the popup lets users instantly enable/disable automatic login.
+- 🚀 **Smooth Migration Engine** — Intelligent legacy detection allows seamless upgrades from older versions without user re-authentication.
+- 🧵 **Atomic Key Initialization** — Advanced synchronization ensures secure, race-condition-free initialization across multiple browser contexts (Popup & Service Worker).
 
 ### v2.3 — Kinetic Obsidian UI
 > Released: April 2026
