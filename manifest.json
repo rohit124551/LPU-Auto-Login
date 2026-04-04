@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LPU Auto Login",
-  "version": "2.3",
+  "version": "2.5",
   "description": "Automated high-speed logins for LPU Gateway, MyClass, and OAS with a premium glassmorphic UI and real-time network monitoring.",
   "permissions": ["storage", "tabs"],
   "background": {

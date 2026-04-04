@@ -1,4 +1,4 @@
-# 🚀 LPU Auto Login | Kinetic Obsidian V2.3
+# 🚀 LPU Auto Login | Kinetic Obsidian V2.5
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-f68220.svg)](https://opensource.org/licenses/MIT)
 [![LPU](https://img.shields.io/badge/LPU-Student_Project-blue.svg)](https://www.lpu.in)
@@ -15,7 +15,8 @@
 - **📡 Network Monitor**: Real-time Gateway status indicator for `internet.lpu.in` and `10.10.0.1`.
 - **⚙️ Modular Settings**: Toggle extra features on or off via the new Settings panel.
 - **🚀 Onboarding Experience**: Automatic redirect to a custom "Thank You" page upon installation for a professional setup.
-- **🔒 Privacy First**: All credentials stay safely in your browser's local storage. Zero external tracking.
+- **🔒 AES-GCM Vault Encryption**: Passwords are encrypted with 256-bit AES-GCM and bound to your User ID. Stored locally only — zero external tracking.
+- **⚡ Master Auto-Login Toggle**: Instantly enable or disable auto-login from the popup. When OFF, nothing fires — no form fill, no login attempt, strictly enforced.
 
 ---
 
@@ -112,3 +113,25 @@ This extension is an independent student project and is NOT affiliated with Love
 ---
 
 *Star this repo if it saved you time! ⭐*
+
+---
+
+## 📋 Changelog
+
+### v2.5 — Security & Control Update
+> Released: April 2026
+
+- 🔒 **AES-GCM (256-bit) Encryption** — Passwords are now encrypted before storage. Plain-text passwords no longer exist in local storage.
+- 🔑 **Unique Dynamic Key per Installation** — Every student gets their own randomly generated AES key. No two extensions share the same key.
+- 🪪 **Identity Binding (AAD)** — Each password is mathematically locked to the specific Registration ID it belongs to. Without the matching ID, decryption is cryptographically impossible.
+- 🧠 **Background-Side Decryption** — Decryption happens exclusively in the extension's background process. LPU portals never see the encryption keys or decryption logic.
+- ⚡ **Master Auto-Login ON/OFF Toggle** — A prominent power chip in the popup lets users instantly enable or disable automatic login. When OFF, the content script reads storage and exits immediately — no form fill, no login attempt, strictly enforced on every page load.
+
+### v2.3 — Kinetic Obsidian UI
+> Released: April 2026
+
+- ✨ Full Kinetic Obsidian glassmorphic UI redesign
+- 🎨 Aura Theme Engine (4 color themes)
+- 📡 Real-time Network Monitor with Gateway status
+- ⚙️ Modular Settings Panel
+- 🚀 Custom onboarding redirect on install
