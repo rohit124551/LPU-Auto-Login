@@ -1,104 +1,76 @@
+// content.js — Auto-fill logic for LPU portals
 (function() {
-    console.log("Kinetic Obsidian Logic v2.1 // Active");
+    const { version } = chrome.runtime.getManifest();
+    console.log(
+        `Kinetic Obsidian v${version} // Active\nMade by Rohit Kumar Ranjan\nPortfolio: https://rohitkumarranjan.in\nGitHub: https://github.com/rohit124551`
+    );
 
     const hostname = window.location.hostname;
 
-    async function handleInternetLogin() {
-        chrome.runtime.sendMessage({ type: 'GET_VAULT_CREDS', flow: 'internet' }, async (response) => {
-            if (response && response.success) {
-                const { user, pass } = response;
+    // Internet Gateway
+    function handleInternetLogin() {
+        chrome.runtime.sendMessage({ type: 'GET_VAULT_CREDS', flow: 'internet' }, (res) => {
+            if (chrome.runtime.lastError) return;
+            if (!res?.success) return;
 
-                const userField = document.querySelector('input[name="username"]') || document.getElementById('username');
-                const passField = document.querySelector('input[name="password"]') || document.getElementById('password');
-                const terms = document.getElementById('agreepolicy') || document.getElementById('chk_id_1') || document.querySelector('input[type="checkbox"]');
-                const loginBtn = document.getElementById('loginbtn') || document.querySelector('button[type="submit"]') || document.querySelector('input[type="submit"]');
+            const userField = document.querySelector('input[name="username"]') || document.getElementById('username');
+            const passField = document.querySelector('input[name="password"]') || document.getElementById('password');
+            const terms     = document.getElementById('agreepolicy') || document.getElementById('chk_id_1') || document.querySelector('input[type="checkbox"]');
+            const btn       = document.getElementById('loginbtn') || document.querySelector('button[type="submit"]') || document.querySelector('input[type="submit"]');
 
-                if (userField && passField) {
-                    // Fill credentials
-                    userField.value = user.split('@')[0]; // Just the ID, the page script appends @lpu.com
-                    passField.value = pass;
-
-                    // Handle checkbox (must be clicked to enable the button on some pages)
-                    if (terms && !terms.checked) {
-                        terms.click();
-                    } else if (terms) {
-                        terms.checked = true;
-                    }
-
-                    // Click login
-                    if (loginBtn) {
-                        // Slight delay to ensure checkbox event processed
-                        setTimeout(() => {
-                            if (loginBtn.disabled) loginBtn.disabled = false;
-                            loginBtn.click();
-                        }, 500);
-                    }
-                }
-            }
+            if (!userField || !passField) return;
+            userField.value = res.user.split('@')[0];
+            passField.value = res.pass;
+            if (terms && !terms.checked) terms.click();
+            if (btn) setTimeout(() => { if (btn.disabled) btn.disabled = false; btn.click(); }, 500);
         });
     }
 
-    async function handleMyClassLogin() {
-        chrome.runtime.sendMessage({ type: 'GET_VAULT_CREDS', flow: 'myclass' }, async (response) => {
-            if (response && response.success) {
-                const { user, pass } = response;
+    // MyClass / CodeTantra
+    function handleMyClassLogin() {
+        chrome.runtime.sendMessage({ type: 'GET_VAULT_CREDS', flow: 'myclass' }, (res) => {
+            if (chrome.runtime.lastError) return;
+            if (!res?.success) return;
 
-                const userField = document.querySelector('input[name="i"]');
-                const passField = document.querySelector('input[name="p"]');
-                const loginBtn = document.querySelector('button[type="submit"]') || document.querySelector('button.ghost-round') || document.querySelector('input[type="submit"]');
+            const userField = document.querySelector('input[name="i"]');
+            const passField = document.querySelector('input[name="p"]');
+            const btn       = document.querySelector('button[type="submit"]') || document.querySelector('button.ghost-round') || document.querySelector('input[type="submit"]');
 
-                if (userField && passField) {
-                    userField.value = user;
-                    passField.value = pass;
-                    if (loginBtn) {
-                        setTimeout(() => loginBtn.click(), 500);
-                    }
-                }
-            }
+            if (!userField || !passField) return;
+            userField.value = res.user;
+            passField.value = res.pass;
+            if (btn) setTimeout(() => btn.click(), 500);
         });
     }
 
-    async function handleOasLogin() {
-        chrome.runtime.sendMessage({ type: 'GET_VAULT_CREDS', flow: 'myclass' }, async (response) => {
-            if (response && response.success) {
-                const { user, pass } = response;
+    // OAS — same SSO credentials as MyClass (LPU unified auth)
+    function handleOasLogin() {
+        chrome.runtime.sendMessage({ type: 'GET_VAULT_CREDS', flow: 'myclass' }, (res) => {
+            if (chrome.runtime.lastError) return;
+            if (!res?.success) return;
 
-                const userField = document.getElementById('login-LoginId');
-                const passField = document.getElementById('login-Password');
-                const loginBtn = document.querySelector('button[type="submit"].btn-success') || document.querySelector('button[type="submit"]');
+            const userField = document.getElementById('login-LoginId');
+            const passField = document.getElementById('login-Password');
+            const btn       = document.querySelector('button[type="submit"].btn-success') || document.querySelector('button[type="submit"]');
 
-                if (userField && passField) {
-                    userField.value = user;
-                    passField.value = pass;
-                    if (loginBtn) {
-                        setTimeout(() => loginBtn.click(), 500);
-                    }
-                }
-            }
+            if (!userField || !passField) return;
+            userField.value = res.user;
+            passField.value = res.pass;
+            if (btn) setTimeout(() => btn.click(), 500);
         });
     }
 
-    // ============================================================
-    // GATE: Read autologin_enabled FRESH from storage on every
-    //       page load. If it is explicitly false → EXIT immediately.
-    //       Nothing fires. No messages. No form filling.
-    // ============================================================
-    chrome.storage.local.get(['autologin_enabled'], (res) => {
-        // autologin_enabled === false means user turned it OFF.
-        // undefined / true both mean ON (default is ON).
-        if (res.autologin_enabled === false) {
-            console.log("Kinetic Obsidian // Auto-Login is OFF. Skipping.");
-            return; // Hard stop — nothing below runs
-        }
+    // Gate: read toggle state before doing anything
+    chrome.storage.local.get(['autologin_enabled', 'feature_settings'], (res) => {
+        if (chrome.runtime.lastError) return;
+        if (res.autologin_enabled === false) return;
 
-        // Toggle is ON — proceed with login
-        if (hostname === 'internet.lpu.in' || hostname === '10.10.0.1' || hostname === 'myaccountinternet.lpu.in') {
+        if (['internet.lpu.in', '10.10.0.1', 'myaccountinternet.lpu.in'].includes(hostname)) {
             handleInternetLogin();
-        } else if (hostname === 'myclass.lpu.in' || hostname === 'lovelyprofessionaluniversity.codetantra.com') {
+        } else if (['myclass.lpu.in', 'lovelyprofessionaluniversity.codetantra.com'].includes(hostname)) {
             handleMyClassLogin();
         } else if (hostname === 'oas.lpu.in') {
             handleOasLogin();
         }
     });
 })();
-
